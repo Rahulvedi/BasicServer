@@ -10,7 +10,7 @@ export default (meta_url) =>{
     const file = fileURLToPath(new URL(meta_url));
     const file_path=file.replace(root,"");
     const customFormat=printf(({level,message,timestamp,stack})=>{
-        return `${timestamp} [${level}] ${file_path} : ${stack|message}`
+        return `${timestamp} [${level}] ${file_path} : ${stack || message}`
     });
     const Folder = new Date();
     const loggerInstance = createLogger({
@@ -24,8 +24,8 @@ export default (meta_url) =>{
         defaultMeta : {service : "user-service"},
         transports:[
             new transports.File({filename:`log/${moment(Folder).format('DD-MM-YYYY')}/error.log`,level:"error"}),
-            new transports.File({filename:`log//${moment(Folder).format('DD-MM-YYYY')}/common.log`}),
-            new transports.File({filename:"log/common.log"})
+            new transports.File({filename:`log/${moment(Folder).format('DD-MM-YYYY')}/common.log`}),
+            new transports.File({filename:`log/common.log`})
         ],
     });
     return loggerInstance;
